@@ -18,7 +18,7 @@ download-data:
 	curl -O https://datasets.imdbws.com/name.basics.tsv.gz && curl -O https://datasets.imdbws.com/title.basics.tsv.gz
 
 prepare-data:
-	. .venv/bin/activate && python src/generate_neo4j_bulk_csvs.py
+	. .venv/bin/activate && python scripts/generate_neo4j_bulk_csvs.py
 
 import-data:
 	docker compose -f docker-compose.import.yml run import
