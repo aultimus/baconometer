@@ -6,10 +6,10 @@ create-venv:
 	@if [ ! -d .venv ]; then python3 -m venv .venv; echo "Python virtual environment created in .venv"; else echo ".venv already exists"; fi
 
 install: create-venv
-	. .venv/bin/activate && pip install -r src/requirements.txt
+	pip install -r src/requirements.txt
 
 test:
-	. .venv/bin/activate && PYTHONPATH=src pytest src/tests/
+	PYTHONPATH=src pytest src/tests/
 
 up-dev:
 	docker-compose up --build
@@ -18,7 +18,7 @@ download-data:
 	curl -O https://datasets.imdbws.com/name.basics.tsv.gz && curl -O https://datasets.imdbws.com/title.basics.tsv.gz
 
 prepare-data:
-	. .venv/bin/activate && python scripts/generate_neo4j_bulk_csvs.py
+	python scripts/generate_neo4j_bulk_csvs.py
 
 import-data:
 	docker compose -f docker-compose.import.yml run import
