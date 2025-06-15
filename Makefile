@@ -11,9 +11,6 @@ install: create-venv
 test:
 	. .venv/bin/activate && PYTHONPATH=src pytest src/tests/
 
-import-to-neo4j:
-	. .venv/bin/activate && pip install -r src/requirements.txt && python src/import_to_neo4j.py
-
 up-dev:
 	docker-compose up --build
 
