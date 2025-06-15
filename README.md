@@ -43,7 +43,7 @@ You can either use the Web front end or the JSON API.
 
 
 ### Web Frontend
-![Baconometer Frontend](images/baconometer.png)
+![Baconometer Frontend](images/baconify-ui.png)
 
 
 ### JSON API
