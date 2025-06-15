@@ -21,6 +21,7 @@ From the top-level project directory, you can use the following commands:
 - `make install` – Installs Python dependencies from `requirements.txt` (or via Poetry if configured).
 - `make run` – Runs the Flask app (served from `src/app.py`).
 - `make download-datasets` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
+- `make test` – Runs the test suite using pytest with the correct import path setup.
 
 Example usage:
 
@@ -28,6 +29,7 @@ Example usage:
 make install
 make run
 make download-datasets
+make test
 ```
 
 ## Features to add
