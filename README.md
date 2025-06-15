@@ -37,6 +37,27 @@ We recommend the following VS Code extensions:
 
 Note, you will need to run the database in the background in order to do this. TODO: write steps.
 
+## Example usage
+
+```
+(.venv) aulty@aulty-thinkpad:~/src/baconometer$ curl -s localhost:5000/bacon-number/Kevin%20Bacon/Tom%20Hanks | json_pp
+{
+   "bacon_number" : 2,
+   "path" : [
+      {
+         "actor1" : "Kevin Bacon",
+         "actor2" : "E. Scott Mayhugh",
+         "film" : "Hollow Man"
+      },
+      {
+         "actor1" : "E. Scott Mayhugh",
+         "actor2" : "Tom Hanks",
+         "film" : "Forrest Gump"
+      }
+   ]
+}
+```
+
 ## Debugging Neo4j
 
 To debug the neo4j database, you can use the Neo4j Browser or cypher-shell:

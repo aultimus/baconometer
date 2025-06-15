@@ -38,32 +38,28 @@ def verify_import():
     )
 
 
-@app.route("/bacon-number/<actorA>/<actorB>", methods=["GET"])
+@app.route("/bacon-number/<actorA>/<actorB>")
 def bacon_number(actorA, actorB):
-    """
-    Returns the Bacon number (shortest path length) and the list of films connecting two actors by their names.
-    Example: /bacon-number/Kevin%20Bacon/Tom%20Hanks
-    """
     with driver.session() as session:
         result = session.run(
             """
             MATCH (a:Actor {name: $actorA}), (b:Actor {name: $actorB})
             MATCH p=shortestPath((a)-[:ACTED_IN*]-(b))
-            WITH p, [n IN nodes(p) WHERE n:Film | n.title] AS films
-            RETURN length(p)/2 AS bacon_number, films
+            WITH nodes(p) AS ns
+            WITH [i IN range(0, size(ns)-3, 2) |
+                {
+                    actor1: ns[i].name,
+                    film: ns[i+1].title,
+                    actor2: ns[i+2].name
+                }
+            ] AS path_steps
+            RETURN size(path_steps) AS bacon_number, path_steps
             """,
             {"actorA": actorA, "actorB": actorB},
         )
         record = result.single()
-        if record and record["bacon_number"] is not None:
-            return jsonify(
-                {
-                    "bacon_number": int(record["bacon_number"]),
-                    "films": record["films"],
-                }
-            )
-        else:
-            return (
-                jsonify({"error": "No path found between the given actors by name."}),
-                404,
-            )
+        if record is None:
+            return jsonify({"error": "No path found"}), 404
+        return jsonify(
+            {"bacon_number": record["bacon_number"], "path": record["path_steps"]}
+        )
