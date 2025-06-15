@@ -37,8 +37,33 @@ We recommend the following VS Code extensions:
 
 Note, you will need to run the database in the background in order to do this. TODO: write steps.
 
+## Debugging Neo4j
+
+To debug the neo4j database, you can use the Neo4j Browser or cypher-shell:
+
+**Using Neo4j Browser:**
+1. Open [http://localhost:7474/](http://localhost:7474/) in your web browser.
+2. Log in with your Neo4j username and password (default: `neo4j` / `neo4jtest123`).
+3. Run commands, e.g.:
+   ```
+   CALL db.indexes();
+   ```
+
+**Using cypher-shell from your host:**
+```bash
+cypher-shell -u neo4j -p neo4jtest123 -a bolt://localhost:7687 "CALL db.indexes();"
+```
+
+**Using cypher-shell inside the container:**
+```bash
+docker compose exec neo4j cypher-shell -u neo4j -p neo4jtest123 "CALL db.indexes();"
+```
+
+
 ## Features to add
 - Caching of results
 - BFS search
 - Map of an actor
 - Wait for db to come up before fully initialising service
+- Move off of Dev server
+- Host
