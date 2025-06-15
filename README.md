@@ -9,8 +9,7 @@
 You should only need to do this once or whenever you want to load new data. The import is the really slow step, this initialises the neo4j database but takes around eight minutes to complete.
 
 - `make download-datasets` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
-- `make import-to-neo4j` – Imports actors and films from the .tsv files into Neo4j. See `src/import_to_neo4j.py`.
-- `make prepare-data` – Fenerates the Neo4j bulk import CSVs (`actors.csv`, `films.csv`, `acted_in.csv`). Run this before importing data into Neo4j for the first time or after updating the datasets via `make download-data`.
+- `make prepare-data` – Generates the Neo4j bulk import CSVs (`actors.csv`, `films.csv`, `acted_in.csv`). Run this before importing data into Neo4j for the first time or after updating the datasets via `make download-data`.
 - `make import-data` – Runs the Neo4j bulk import step using Docker Compose. This loads the generated CSVs into a fresh Neo4j database.
 
 ## Testing
