@@ -34,7 +34,9 @@ services:
     volumes:
       - ./src:/app/src
     working_dir: /app
-    command: ["flask", "run", "--host=0.0.0.0"]
+    # Enable auto-reload for development
+    # Note: --reload is not available in production mode, so this is for development only.
+    command: ["flask", "run", "--host=0.0.0.0", --reload]
     mem_limit: 1g
     cpus: 0.5
 
