@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  import:
+    image: neo4j:5
+    container_name: baconometer-import
+    entrypoint: ["neo4j-admin", "database", "import", "full", "neo4j",
+      "--nodes=Actor=/import/actors.csv",
+      "--nodes=Film=/import/films.csv",
+      "--relationships=ACTED_IN=/import/acted_in.csv",
+      --overwrite-destination=true,
+      ]
+    volumes:
+      - ./actors.csv:/import/actors.csv
+      - ./films.csv:/import/films.csv
+      - ./acted_in.csv:/import/acted_in.csv
+      - neo4j_data:/data
+    mem_limit: 8g
+    cpus: 1.0
+
+volumes:
+  neo4j_data:

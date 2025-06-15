@@ -16,6 +16,7 @@ __pycache__/
 instance/
 .webassets-cache
 
-# Ignore all .tsv and .tsv.gz files
+# Ignore all .csv, .tsv and .tsv.gz files
 *.tsv
 *.tsv.gz
+*.csv

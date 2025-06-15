@@ -1,6 +1,27 @@
 # Baconometer
 
-## Running in the Debugger (VS Code)
+## Dev setup
+
+- `make install` – Installs Python dependencies from `requirements.txt` (or via Poetry if configured).
+
+## Downloading and Preparing Data
+
+You should only need to do this once or whenever you want to load new data. The import is the really slow step, this initialises the neo4j database but takes around eight minutes to complete.
+
+- `make download-datasets` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
+- `make import-to-neo4j` – Imports actors and films from the .tsv files into Neo4j. See `src/import_to_neo4j.py`.
+- `make prepare-data` – Fenerates the Neo4j bulk import CSVs (`actors.csv`, `films.csv`, `acted_in.csv`). Run this before importing data into Neo4j for the first time or after updating the datasets via `make download-data`.
+- `make import-data` – Runs the Neo4j bulk import step using Docker Compose. This loads the generated CSVs into a fresh Neo4j database.
+
+## Testing
+
+- `make test` – Runs the test suite using pytest with the correct import path setup.
+
+## Running
+
+- `make up-dev` – Starts the full stack (Neo4j and your app) using Docker Compose.
+
+### Running in the Debugger (VS Code)
 
 We recommend the following VS Code extensions:
 
@@ -14,26 +35,10 @@ We recommend the following VS Code extensions:
 4. Click the green "Run" button or press F5.
 5. Set breakpoints in your Python files as needed.
 
-## Using the Makefile
-
-From the top-level project directory, you can use the following commands:
-
-- `make install` – Installs Python dependencies from `requirements.txt` (or via Poetry if configured).
-- `make run` – Runs the Flask app (served from `src/app.py`).
-- `make download-datasets` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
-- `make test` – Runs the test suite using pytest with the correct import path setup.
-
-Example usage:
-
-```bash
-make install
-make run
-make download-datasets
-make test
-```
+Note, you will need to run the database in the background in order to do this. TODO: write steps.
 
 ## Features to add
 - Caching of results
 - BFS search
-- SQL Database
 - Map of an actor
+- Wait for db to come up before fully initialising service
