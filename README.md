@@ -3,13 +3,13 @@
 ## Dev setup
 
 - `make install` – Installs Python dependencies from `requirements.txt` (or via Poetry if configured) and creates `.venv` venv.
-- ` .venv/bin/activate` – Activate venv. It is recommended to install [pyenv](https://github.com/pyenv/pyenv) to obviate the need for this step.
+- `. .venv/bin/activate` – Activate venv. It is recommended to install [pyenv](https://github.com/pyenv/pyenv) to obviate the need for this step.
 
 ## Downloading and Preparing Data
 
 You should only need to do this once or whenever you want to load new data. The import is the really slow step, this initialises the neo4j database but takes around eight minutes to complete.
 
-- `make download-datasets` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
+- `make download-data` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
 - `make prepare-data` – Generates the Neo4j bulk import CSVs (`actors.csv`, `films.csv`, `acted_in.csv`).
 - `make import-data` – Runs the Neo4j bulk import step using Docker Compose. This loads the generated CSVs into a fresh Neo4j database. To run the bulk import manually (outside Docker), use `scripts/import_neo4j_bulk.sh`.
 
@@ -88,11 +88,17 @@ cypher-shell -u neo4j -p neo4jtest123 -a bolt://localhost:7687 "CALL db.indexes(
 docker compose exec neo4j cypher-shell -u neo4j -p neo4jtest123 "CALL db.indexes();"
 ```
 
+## Design Decisions
+### Graph vs Relational DB
+TODO
+
+### Insert vs Bulk import
+TODO
 
 ## Features to add
 - Caching of results
-- BFS search
 - Map of an actor
 - Wait for db to come up before fully initialising service
 - Move off of Dev server
 - Host
+- Switch to poetry

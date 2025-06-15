@@ -15,7 +15,7 @@ up-dev:
 	docker-compose up --build
 
 download-data:
-	curl -O https://datasets.imdbws.com/name.basics.tsv.gz && curl -O https://datasets.imdbws.com/title.basics.tsv.gz
+	curl -O https://datasets.imdbws.com/name.basics.tsv.gz && gunzip name.basics.tsv.gz && curl -O https://datasets.imdbws.com/title.basics.tsv.gz && gunzip title.basics.tsv.gz
 
 prepare-data:
 	python scripts/generate_neo4j_bulk_csvs.py
