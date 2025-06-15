@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🥓 Baconometer 🥓</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        .form-section { margin-bottom: 2em; }
+        .form-section label {
+            font-size: 2em;
+            margin-right: 0.5em;
+        }
+        .form-section input[type="text"] {
+            font-size: 2em;
+            padding: 6px 10px;
+            margin-right: 1em;
+        }
+        .form-section button {
+            font-size: 1.2em;
+            padding: 6px 18px;
+        }
+        .node { display: inline-block; padding: 10px 20px; border-radius: 20px; background: #f0f0f0; margin: 0 5px; }
+        .film { background: #ffe0b2; }
+        .actor { background: #b3e5fc; }
+        .arrow-container { display: inline-block; text-align: center; width: 60px; vertical-align: middle; }
+        .arrow-label { display: block; font-size: 0.9em; color: #555; margin-bottom: 2px; }
+        .arrow { font-size: 1.5em; vertical-align: middle; }
+        #result { margin-top: 2em; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>🥓 Baconometer 🥓</h1>
+    <div class="form-section">
+        <label for="actorA">Actor A:</label>
+        <input type="text" id="actorA" name="actorA" required value="Kevin Bacon">
+        <label for="actorB">Actor B:</label>
+        <input type="text" id="actorB" name="actorB" required>
+        <button id="baconifyBtn">Baconify</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('baconifyBtn').onclick = async function() {
+            const actorA = encodeURIComponent(document.getElementById('actorA').value.trim());
+            const actorB = encodeURIComponent(document.getElementById('actorB').value.trim());
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            if (!actorA || !actorB) {
+                resultDiv.innerHTML = '<div class="error">Please enter both actor names.</div>';
+                return;
+            }
+            resultDiv.innerHTML = 'Loading...';
+            try {
+                const response = await fetch(`/bacon-number/${actorA}/${actorB}`);
+                if (!response.ok) {
+                    const err = await response.json();
+                    resultDiv.innerHTML = `<div class="error">${err.error || 'No path found.'}</div>`;
+                    return;
+                }
+                const data = await response.json();
+                if (!data.path || data.path.length === 0) {
+                    resultDiv.innerHTML = '<div class="error">No connection found between these actors.</div>';
+                    return;
+                }
+                let html = `<h2>Bacon Number: ${data.bacon_number}</h2><div>`;
+                // Render nodes and arrows with labels
+                html += `<span class="node actor">${data.path[0].actor1}</span>`;
+                data.path.forEach(step => {
+                    html += `<span class="arrow-container">
+                                <span class="arrow-label">in</span>
+                                <span class="arrow">&#8594;</span>
+                             </span>`;
+                    html += `<span class="node film">${step.film}</span>`;
+                    html += `<span class="arrow-container">
+                                <span class="arrow-label">with</span>
+                                <span class="arrow">&#8594;</span>
+                             </span>`;
+                    html += `<span class="node actor">${step.actor2}</span>`;
+                });
+                html += `</div>`;
+                resultDiv.innerHTML = html;
+            } catch (e) {
+                resultDiv.innerHTML = `<div class="error">Error: ${e.message}</div>`;
+            }
+        };
+    </script>
+</body>

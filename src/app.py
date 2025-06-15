@@ -12,9 +12,8 @@ driver = GraphDatabase.driver(
 
 
 @app.route("/")
-def home():
-    return "baconometer"
-    # return render_template("index.html")
+def baconify():
+    return render_template("baconify.html")
 
 
 @app.route("/verify_import", methods=["GET"])

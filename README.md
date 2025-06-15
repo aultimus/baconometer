@@ -39,6 +39,14 @@ Note, you will need to run the database in the background in order to do this. T
 
 ## Example usage
 
+You can either use the Web front end or the JSON API.
+
+
+### Web Frontend
+![Baconometer Frontend](images/baconometer.png)
+
+
+### JSON API
 ```
 (.venv) aulty@aulty-thinkpad:~/src/baconometer$ curl -s localhost:5000/bacon-number/Kevin%20Bacon/Tom%20Hanks | json_pp
 {
