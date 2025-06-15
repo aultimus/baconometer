@@ -18,7 +18,7 @@ We recommend the following VS Code extensions:
 
 From the top-level project directory, you can use the following commands:
 
-- `make install` – Installs Python dependencies from `src/requirements.txt`.
+- `make install` – Installs Python dependencies from `requirements.txt` (or via Poetry if configured).
 - `make run` – Runs the Flask app (served from `src/app.py`).
 - `make download-datasets` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
 
