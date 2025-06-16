@@ -2,10 +2,8 @@
 
 .PHONY: install run download-data create-venv test import-to-neo4j compose-up download-data prepare-data
 
-create-venv:
-	@if [ ! -d .venv ]; then python3 -m venv .venv; echo "Python virtual environment created in .venv"; else echo ".venv already exists"; fi
-
-install: create-venv
+install:
+	pip install -r src/dev-requirements.txt
 	pip install -r src/requirements.txt
 
 test:

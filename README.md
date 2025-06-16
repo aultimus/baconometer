@@ -2,6 +2,7 @@
 
 ## Dev setup
 
+- `python -m venv .venv && . .venv/bin/activate ` - create and activate venv
 - `make install` – Installs Python dependencies from `requirements.txt` (or via Poetry if configured) and creates `.venv` venv.
 - `. .venv/bin/activate` – Activate venv. It is recommended to install [pyenv](https://github.com/pyenv/pyenv) to obviate the need for this step.
 
