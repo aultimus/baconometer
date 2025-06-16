@@ -21,3 +21,5 @@ prepare-data:
 import-data:
 	docker compose -f docker-compose.import.yml run import
 
+run-neo4j:
+	docker compose -f docker-compose.yml run neo4j

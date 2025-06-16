@@ -30,13 +30,12 @@ We recommend the following VS Code extensions:
 - [Python Debugger](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy)
 - [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) 
 
-1. Open the project folder in VS Code.
-2. Go to the Run and Debug panel (play icon in the sidebar).
-3. Select "Python: Flask" from the dropdown.
-4. Click the green "Run" button or press F5.
-5. Set breakpoints in your Python files as needed.
-
-Note, you will need to run the database in the background in order to do this. TODO: write steps.
+1. Standup the database. Run `make run-neo4j`
+2. Open the project folder in VS Code.
+3. Go to the Run and Debug panel (play icon in the sidebar).
+4. Select "Python: Flask" from the dropdown.
+5. Click the green "Run" button or press F5.
+6. Set breakpoints in your Python files as needed.
 
 ## Example usage
 
