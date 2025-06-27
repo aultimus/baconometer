@@ -109,10 +109,147 @@ docker compose exec neo4j cypher-shell -u neo4j -p neo4jtest123 "SHOW INDEXES;"
 
 ## Design Decisions
 ### Graph vs Relational DB
-TODO
+This project uses **Neo4j**, a graph database, instead of a traditional relational (SQL) database. This choice was driven by the nature of the data and the types of queries the application needs to perform.
+
+---
+
+### Data Model
+
+The core of this project is representing **connections between actors through movies** (the classic "degrees of separation" or "Bacon Number"). This data is inherently a **network of relationships**, not just isolated rows.
+
+- **Graph Databases** natively model entities and relationships:
+  - Actors and movies are nodes.
+  - "ACTED_IN" is an explicit relationship.
+- **SQL Databases** require multiple join tables and foreign keys to express the same structure, leading to complex, slow joins for traversal.
+
+---
+
+### Query Patterns
+
+Key queries in this project include:
+
+- Finding the **shortest path** between two actors.
+- Exploring all actors connected to a given actor within N degrees.
+- Traversing large portions of the network efficiently.
+
+These queries are:
+
+**Trivial in Neo4j** using Cypher's `shortestPath()` or `variable-length pattern matching`.
+**Complex and slow in SQL**, requiring recursive Common Table Expressions (CTEs) or application-level graph traversal logic.
+
+---
+
+### Performance
+
+Graph databases are designed to:
+
+- Traverse relationships in **constant time** regardless of overall dataset size.
+- Avoid costly table scans and joins.
+- Scale better for dense networks of interconnected data.
+
+In SQL databases, even moderately complex traversal queries can degrade performance significantly as the data grows.
+
+---
+
+### Summary of Advantages
+
+| Aspect             | Graph Database (Neo4j)                                    | SQL Database                                          |
+|--------------------|-----------------------------------------------------------|-------------------------------------------------------|
+| **Data model**     | Native nodes and relationships                           | Tables with foreign keys and join tables             |
+| **Traversals**     | Efficient, built-in graph traversal algorithms           | Complex, often requiring recursive queries           |
+| **Query language** | Cypher, optimized for graph patterns                     | SQL, optimized for tabular data                      |
+| **Performance**    | Consistent traversal performance even at large scale     | Performance degrades with multiple joins and recursions |
+
+---
+
+### Conclusion
+
+Given that this project is fundamentally about **exploring and analyzing connections between people**, a graph database was the natural choice. It provides:
+
+- A more intuitive data model.
+- Faster query performance for path finding.
+- Simpler code and maintenance over time.
 
 ### Insert vs Bulk import
-TODO
+
+Neo4j supports two ways to load data:
+
+- **Incremental Inserts**: Creating nodes and relationships one by one with Cypher (`CREATE`, `MERGE`).
+- **Bulk Import**: Using `neo4j-admin import` to load large datasets from CSV files into a new database.
+
+This project uses **bulk import** because:
+
+- The initial dataset is large (many actors, movies, and relationships).
+- Bulk import is much faster:
+  - Processes all data in one pass.
+  - Builds indexes efficiently.
+  - Avoids transaction overhead.
+- Incremental inserts are simpler for small updates but slow for big loads.
+
+---
+
+| Method               | Best For                         | Drawbacks                         |
+|----------------------|----------------------------------|-----------------------------------|
+| **Incremental Insert** | Small or frequent updates        | Slow for large initial datasets   |
+| **Bulk Import**        | Initial bulk loading of data     | Requires empty database, offline |
+
+---
+
+
+Bulk import ensures the graph loads quickly and cleanly. After the initial load, any new data can be added incrementally as needed.
+
+
+## Data Sources and Licensing
+
+### Data Sources
+
+This project currently uses the **IMDb dataset** available at:
+
+> https://datasets.imdbws.com/
+
+**Important note:**
+The IMDb data is provided for *personal and non-commercial use only*. Redistribution or public hosting of IMDb-derived data is prohibited by their terms. This repository **does not** contain IMDb data itself, only code to process data you download separately.
+
+---
+
+### Migration Notice
+
+We intend to **migrate away from IMDb** in order to:
+- Avoid licensing restrictions.
+- Enable public hosting and sharing of the dataset.
+- Ensure long-term sustainability.
+
+We are evaluating alternative data providers, including **TMDb** and **Wikidata**.
+
+---
+
+### Comparison of Data Providers
+
+| Feature                   | IMDb                                                | TMDb                                                | Wikidata                                       |
+|---------------------------|-----------------------------------------------------|-----------------------------------------------------|-----------------------------------------------|
+| **Coverage**              | Excellent (most comprehensive)                      | Very good, especially modern films and TV          | Mixed / inconsistent                         |
+| **Data freshness**        | Excellent                                           | Excellent                                           | Varies                                       |
+| **Access method**         | Static TSV dumps                                    | REST API                                           | SPARQL endpoint / RDF dump                   |
+| **Licensing**             | Personal/non-commercial use only                    | Free (with attribution required)                  | Fully public domain (CC0)                    |
+| **Redistribution**        | Not allowed without explicit permission             | Allowed if you attribute TMDb                      | Fully allowed                                |
+| **Ease of use**           | Medium (requires TSV parsing and mapping)           | Easy (well-documented JSON API)                   | Medium-hard (SPARQL queries, data modeling) |
+| **Media assets**          | Limited in dumps                                    | Rich metadata, posters, images                    | Few images                                   |
+| **Data consistency**      | High                                                | High for modern data                              | Varies                                       |
+
+---
+
+### Current Status
+
+At this time, the project uses IMDb solely for personal, non-commercial research. No IMDb data is redistributed or hosted as part of this repository.
+
+We plan to transition to **TMDb** or **Wikidata** in the near future to ensure compliance with open data licensing and to enable public deployment.
+
+---
+
+### Contributing
+
+If you have experience working with TMDb or Wikidata datasets and would like to help with the migration, contributions are welcome!
+
 
 ## Features to add
 - Caching of results
@@ -122,4 +259,6 @@ TODO
 - Host
 - Switch to poetry
 - Support distinguishing between multiple actors with same name
-- Add links to imdb entries
+- Add links to imdb/tmdb entries
+- Optionally allow entering an imdb/tmdb actor id instead of a name
+- Switch from IMDB to TMDB (better licensing and support)
