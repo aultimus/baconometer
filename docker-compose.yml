@@ -12,7 +12,7 @@ services:
       - NEO4J_server_memory_pagecache_size=1G
     volumes:
       - neo4j_data:/data
-      - ./scripts/init.cypher:/docker-entrypoint-initdb.d/init.cypher
+      - ./import:/import
     mem_limit: 4g
     cpus: 1.0
 

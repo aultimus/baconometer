@@ -1,5 +1,23 @@
 # Baconometer
 
+This is a service that allows a user to find Bacon numbers.
+A Bacon number is a measure of the "degrees of separation" between any actor and the actor Kevin Bacon, based on their appearances in films together. Specifically, an actor's Bacon number is defined as follows:
+
+Kevin Bacon himself has a Bacon number of 0.
+Any actor who has appeared in a film with Kevin Bacon has a Bacon number of 1.
+Any actor who has not appeared with Kevin Bacon, but has appeared with someone who has, has a Bacon number of 2.
+This pattern continues, with the Bacon number increasing by one for each additional degree of separation through shared film appearances.
+The concept is based on the idea that any actor in the film industry can be linked to Kevin Bacon through a chain of co-starring roles, and is inspired by the "Six Degrees of Separation" theory. The lower an actor's Bacon number, the closer their connection to Kevin Bacon.
+
+This service can be used to find the degrees of separation of any two actors, not just Kevin Bacon and another actor!
+
+The service works by importing movie and actor data from IMDb into a Neo4j graph database, where actors and films are represented as nodes connected by "acted in" relationships. When you search for a Bacon number or a connection between two actors, the service uses efficient graph algorithms to find the shortest path between them. The web frontend provides a simple interface for entering actor names and visualizing their connection path.
+
+The Neo4j database is initialized using its native bulk import tool, which is much faster than inserting records one at a time. This step loads all nodes and relationships in a single operation, building indexes as specified.
+
+The service indexes on a lower cased representation of names whilst displaying title case names to the user. This is in order to remove the need for case accurate user name entries, hence 'kevin bacon' is an acceptable input as is 'Kevin Bacon'.
+
+
 ## Dev setup
 
 - `python -m venv .venv && . .venv/bin/activate ` - create and activate venv
@@ -21,6 +39,7 @@ You should only need to do this once or whenever you want to load new data. The 
 ## Running
 
 - `make up-dev` – Starts the full stack (Neo4j and your app) using Docker Compose.
+- `make create-indexes` - Has to be ran whilst service is running after database has been recreated.
 
 ### Running in the Debugger (VS Code)
 
@@ -75,17 +94,17 @@ To debug the neo4j database, you can use the Neo4j Browser or cypher-shell:
 2. Log in with your Neo4j username and password (default: `neo4j` / `neo4jtest123`).
 3. Run commands, e.g.:
    ```
-   CALL db.indexes();
+   SHOW INDEXES;
    ```
 
 **Using cypher-shell from your host:**
 ```bash
-cypher-shell -u neo4j -p neo4jtest123 -a bolt://localhost:7687 "CALL db.indexes();"
+cypher-shell -u neo4j -p neo4jtest123 -a bolt://localhost:7687 "SHOW INDEXES;"
 ```
 
 **Using cypher-shell inside the container:**
 ```bash
-docker compose exec neo4j cypher-shell -u neo4j -p neo4jtest123 "CALL db.indexes();"
+docker compose exec neo4j cypher-shell -u neo4j -p neo4jtest123 "SHOW INDEXES;"
 ```
 
 ## Design Decisions

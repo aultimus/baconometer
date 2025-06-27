@@ -39,10 +39,13 @@ def verify_import():
 
 @app.route("/bacon-number/<actorA>/<actorB>")
 def bacon_number(actorA, actorB):
+    # Convert input names to lowercase for case-insensitive search
+    actor_a_lc = actorA.lower()
+    actor_b_lc = actorB.lower()
     with driver.session() as session:
         result = session.run(
             """
-            MATCH (a:Actor {name: $actorA}), (b:Actor {name: $actorB})
+            MATCH (a:Actor {lowercase_name: $actorA}), (b:Actor {lowercase_name: $actorB})
             MATCH p=shortestPath((a)-[:ACTED_IN*]-(b))
             WITH nodes(p) AS ns
             WITH [i IN range(0, size(ns)-3, 2) |
@@ -54,7 +57,7 @@ def bacon_number(actorA, actorB):
             ] AS path_steps
             RETURN size(path_steps) AS bacon_number, path_steps
             """,
-            {"actorA": actorA, "actorB": actorB},
+            {"actorA": actor_a_lc, "actorB": actor_b_lc},
         )
         record = result.single()
         if record is None:

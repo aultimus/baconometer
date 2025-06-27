@@ -43,12 +43,14 @@ def main():
         reader = csv.DictReader(infile, delimiter="\t")
         actors_writer = csv.writer(actors_out)
         acted_in_writer = csv.writer(acted_in_out)
-        actors_writer.writerow(["nconst:ID(Actor)", "name"])
+        actors_writer.writerow(["nconst:ID(Actor)", "name", "lowercase_name"])
         acted_in_writer.writerow([":START_ID(Actor)", ":END_ID(Film)"])
         i = 0
         rels = 0
         for row in reader:
-            actors_writer.writerow([row["nconst"], row["primaryName"]])
+            name = row["primaryName"]
+            lowercase_name = name.lower()
+            actors_writer.writerow([row["nconst"], name, lowercase_name])
             if row["knownForTitles"]:
                 for title_id in row["knownForTitles"].split(","):
                     if title_id in film_ids:

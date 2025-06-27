@@ -1,6 +1,6 @@
 # Makefile for running the Flask app and managing datasets
 
-.PHONY: install run download-data create-venv test import-to-neo4j compose-up download-data prepare-data
+.PHONY: install run download-data create-venv test import-to-neo4j compose-up download-data prepare-data create-indexes
 
 install:
 	pip install -r src/dev-requirements.txt
@@ -23,3 +23,7 @@ import-data:
 
 run-neo4j:
 	docker compose -f docker-compose.yml run neo4j
+
+create-indexes:
+	docker exec -i neo4j \
+		cypher-shell -u neo4j -p neo4jtest123 -f /import/indexes.cypher
