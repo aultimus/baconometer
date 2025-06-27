@@ -15,7 +15,7 @@ The service works by importing movie and actor data from IMDb into a Neo4j graph
 
 The Neo4j database is initialized using its native bulk import tool, which is much faster than inserting records one at a time. This step loads all nodes and relationships in a single operation, building indexes as specified.
 
-The service indexes on a lower cased representation of names whilst displaying title case names to the user. This is in order to remove the need for case accurate user name entries, hence 'kevin bacon' is an acceptable input as is 'Kevin Bacon'.
+The service indexes on a lower cased representation of names whilst displaying title case names to the user. This is in order to remove the need for case accurate user name entries, hence 'kevin bacon' is an acceptable input as is 'Kevin Bacon'. These indexes are used to look up the initial actors, then a breadth first search is performed from both actors to find a path between them, alternately traversing actor and film nodes.
 
 
 ## Dev setup
@@ -121,3 +121,5 @@ TODO
 - Move off of Dev server
 - Host
 - Switch to poetry
+- Support distinguishing between multiple actors with same name
+- Add links to imdb entries

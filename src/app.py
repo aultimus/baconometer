@@ -59,8 +59,11 @@ def bacon_number(actorA, actorB):
         with driver.session() as session:
             result = session.run(
                 """
-                MATCH (a:Actor {lowercase_name: $actorA}), (b:Actor {lowercase_name: $actorB})
-                MATCH p=shortestPath((a)-[:ACTED_IN*]-(b))
+                MATCH p = shortestPath(
+                    (a:Actor {lowercase_name: $actorA})-
+                    [:ACTED_IN*..7]-
+                    (b:Actor {lowercase_name: $actorB})
+                )
                 WITH nodes(p) AS ns
                 WITH [i IN range(0, size(ns)-3, 2) |
                     {
@@ -70,11 +73,12 @@ def bacon_number(actorA, actorB):
                     }
                 ] AS path_steps
                 RETURN size(path_steps) AS bacon_number, path_steps
+                LIMIT 1
                 """,
                 {"actorA": actor_a_lc, "actorB": actor_b_lc},
             )
             record = result.single()
-            if record is None:
+            if record is None or record["bacon_number"] is None:
                 return jsonify({"error": "No path found"}), 404
             return jsonify(
                 {"bacon_number": record["bacon_number"], "path": record["path_steps"]}
