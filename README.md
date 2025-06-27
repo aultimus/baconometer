@@ -261,4 +261,4 @@ If you have experience working with TMDb or Wikidata datasets and would like to 
 - Support distinguishing between multiple actors with same name
 - Add links to imdb/tmdb entries
 - Optionally allow entering an imdb/tmdb actor id instead of a name
-- Switch from IMDB to TMDB (better licensing and support)
+- Switch from IMDB to TMDB (better licensing and support). Add import abstraction layer so project can work with different datasets. 
