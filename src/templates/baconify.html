@@ -53,12 +53,17 @@
             resultDiv.innerHTML = 'Loading...';
             try {
                 const response = await fetch(`/bacon-number/${actorA}/${actorB}`);
-                if (!response.ok) {
-                    const err = await response.json();
-                    resultDiv.innerHTML = `<div class="error">${err.error || 'No path found.'}</div>`;
+                let data;
+                try {
+                    data = await response.json();
+                } catch (jsonErr) {
+                    resultDiv.innerHTML = `<div class="error">Unexpected server error. Please try again later.</div>`;
                     return;
                 }
-                const data = await response.json();
+                if (!response.ok) {
+                    resultDiv.innerHTML = `<div class="error">${data.error || 'No path found.'}</div>`;
+                    return;
+                }
                 if (!data.path || data.path.length === 0) {
                     resultDiv.innerHTML = '<div class="error">No connection found between these actors.</div>';
                     return;
@@ -81,8 +86,9 @@
                 html += `</div>`;
                 resultDiv.innerHTML = html;
             } catch (e) {
-                resultDiv.innerHTML = `<div class="error">Error: ${e.message}</div>`;
+                resultDiv.innerHTML = `<div class="error">Error: ${e.message || 'Unexpected error.'}</div>`;
             }
         };
     </script>
 </body>
+</html>

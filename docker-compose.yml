@@ -35,7 +35,7 @@ services:
     working_dir: /app
     # Enable auto-reload for development
     # Note: --reload is not available in production mode, so this is for development only.
-    command: ["flask", "run", "--host=0.0.0.0", --reload]
+    command: ["gunicorn", "-b", "0.0.0.0:8000", "src.app:app", "--reload"]
     mem_limit: 1g
     cpus: 0.5
 
