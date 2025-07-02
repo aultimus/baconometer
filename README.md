@@ -11,7 +11,7 @@ The concept is based on the idea that any actor in the film industry can be link
 
 This service can be used to find the degrees of separation of any two actors, not just Kevin Bacon and another actor!
 
-The service works by importing movie and actor data from IMDb into a Neo4j graph database, where actors and films are represented as nodes connected by "acted in" relationships. When you search for a Bacon number or a connection between two actors, the service uses efficient graph algorithms to find the shortest path between them. The web frontend provides a simple interface for entering actor names and visualizing their connection path.
+The service works by importing movie and actor data into a Neo4j graph database, where actors and films are represented as nodes connected by "acted in" relationships. When you search for a Bacon number or a connection between two actors, the service uses efficient graph algorithms to find the shortest path between them. The web frontend provides a simple interface for entering actor names and visualizing their connection path.
 
 The Neo4j database is initialized using its native bulk import tool, which is much faster than inserting records one at a time. This step loads all nodes and relationships in a single operation, building indexes as specified.
 
@@ -26,10 +26,20 @@ The service indexes on a lower cased representation of names whilst displaying t
 
 ## Downloading and Preparing Data
 
+### IMDB Data
+IMDB data is downloadable *personal and non-commercial use only*, you should be aware of the strict copyright when using this data. You should not host a service serving this data, for that use case TMDB or Wikidata is more appropriate.
+
 You should only need to do this once or whenever you want to load new data. The import is the really slow step, this initialises the neo4j database but takes around eight minutes to complete.
 
-- `make download-data` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
+- `make download-imdb-data` – Downloads the IMDb dataset files (`name.basics.tsv.gz` and `title.basics.tsv.gz`) into the top-level directory.
 - `make prepare-data` – Generates the Neo4j bulk import CSVs (`actors.csv`, `films.csv`, `acted_in.csv`).
+
+
+### TMDB Data
+Use `github.com/aultimus/tmdb-crawler` to obtain `actors.csv`, `films.csv` and `acted_in.csv`
+
+### Importing Data
+
 - `make import-data` – Runs the Neo4j bulk import step using Docker Compose. This loads the generated CSVs into a fresh Neo4j database. To run the bulk import manually (outside Docker), use `scripts/import_neo4j_bulk.sh`.
 
 ## Testing
@@ -203,23 +213,22 @@ Bulk import ensures the graph loads quickly and cleanly. After the initial load,
 
 ### Data Sources
 
-This project currently uses the **IMDb dataset** available at:
+This project provides an option to use the **IMDb dataset** for experimental purposes available at:
 
 > https://datasets.imdbws.com/
+
 
 **Important note:**
 The IMDb data is provided for *personal and non-commercial use only*. Redistribution or public hosting of IMDb-derived data is prohibited by their terms. This repository **does not** contain IMDb data itself, only code to process data you download separately.
 
 ---
 
-### Migration Notice
+### IMDB Licensing Notice
 
-We intend to **migrate away from IMDb** in order to:
+The hosted version of this service does not use IMDB data in order to:
 - Avoid licensing restrictions.
 - Enable public hosting and sharing of the dataset.
 - Ensure long-term sustainability.
-
-We are evaluating alternative data providers, including **TMDb** and **Wikidata**.
 
 ---
 
@@ -261,4 +270,5 @@ If you have experience working with TMDb or Wikidata datasets and would like to 
 - Support distinguishing between multiple actors with same name
 - Add links to imdb/tmdb entries
 - Optionally allow entering an imdb/tmdb actor id instead of a name
-- Switch from IMDB to TMDB (better licensing and support). Add import abstraction layer so project can work with different datasets. 
+- Switch from IMDB to TMDB (better licensing and support). Add import abstraction layer so project can work with different datasets.
+- Store and display year of the film
