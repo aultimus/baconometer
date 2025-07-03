@@ -68,9 +68,10 @@ def bacon_number(actorA, actorB):
                 WITH [i IN range(0, size(ns)-3, 2) |
                     {
                         actor1: ns[i].name,
-                        character: rels[i+1].character,
+                        character1: rels[i].character,
                         film: ns[i+1].title + ' (' + coalesce(ns[i+1].year, '') + ')',
-                        actor2: ns[i+2].name
+                        actor2: ns[i+2].name,
+                        character2: rels[i+1].character
                     }
                 ] AS path_steps
                 RETURN size(path_steps) AS bacon_number, path_steps

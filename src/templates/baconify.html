@@ -70,12 +70,13 @@
                     return;
                 }
                 let html = `<h2>Bacon Number: ${data.bacon_number}</h2><div>`;
-                html += `<span class="node actor">${data.path[0].actor1}</span>`;
+                // Render nodes and arrows with character info for both actors
+                html += `<span class="node actor">${data.path[0].actor1}`;
+                if (data.path[0].character1 && data.path[0].character1.trim() !== "") {
+                    html += ` <span class="character">as ${data.path[0].character1}</span>`;
+                }
+                html += `</span>`;
                 data.path.forEach(step => {
-                    // Render 'as character' after actor1 if character exists
-                    if (step.character && step.character.trim() !== "") {
-                        html += ` <span>as</span> <span class="node character">${step.character}</span>`;
-                    }
                     html += `<span class="arrow-container">
                                 <span class="arrow-label">in</span>
                                 <span class="arrow">&#8594;</span>
@@ -85,7 +86,11 @@
                                 <span class="arrow-label">with</span>
                                 <span class="arrow">&#8594;</span>
                              </span>`;
-                    html += `<span class="node actor">${step.actor2}</span>`;
+                    html += `<span class="node actor">${step.actor2}`;
+                    if (step.character2 && step.character2.trim() !== "") {
+                        html += ` <span class="character">as ${step.character2}</span>`;
+                    }
+                    html += `</span>`;
                 });
                 html += `</div>`;
                 resultDiv.innerHTML = html;
