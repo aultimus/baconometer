@@ -19,13 +19,41 @@
             font-size: 1.2em;
             padding: 6px 18px;
         }
-        .node { display: inline-block; padding: 10px 20px; border-radius: 20px; background: #f0f0f0; margin: 0 5px; }
+        .node {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: #f0f0f0;
+            margin: 0 5px;
+        }
         .film { background: #ffe0b2; }
         .actor { background: #b3e5fc; }
-        .character { background: #d1c4e9; }
-        .arrow-container { display: inline-block; text-align: center; width: 60px; vertical-align: middle; }
-        .arrow-label { display: block; font-size: 0.9em; color: #555; margin-bottom: 2px; }
-        .arrow { font-size: 1.5em; vertical-align: middle; }
+        .character-box {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: #b39ddb;
+            color: #222;
+            margin: 0 0 0 3px;
+            font-size: 0.9em;
+            vertical-align: middle;
+        }
+        .arrow-container {
+            display: inline-block;
+            text-align: center;
+            width: 60px;
+            vertical-align: middle;
+        }
+        .arrow-label {
+            display: block;
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 2px;
+        }
+        .arrow {
+            font-size: 1.5em;
+            vertical-align: middle;
+        }
         #result { margin-top: 2em; }
         .error { color: red; }
     </style>
@@ -40,7 +68,6 @@
         <button id="baconifyBtn">Baconify</button>
     </div>
     <div id="result"></div>
-
     <script>
         document.getElementById('baconifyBtn').onclick = async function() {
             const actorA = encodeURIComponent(document.getElementById('actorA').value.trim());
@@ -70,12 +97,10 @@
                     return;
                 }
                 let html = `<h2>Bacon Number: ${data.bacon_number}</h2><div>`;
-                // Render nodes and arrows with character info for both actors
-                html += `<span class="node actor">${data.path[0].actor1}`;
+                html += `<span class="node actor">${data.path[0].actor1}</span>`;
                 if (data.path[0].character1 && data.path[0].character1.trim() !== "") {
-                    html += ` <span class="character">as ${data.path[0].character1}</span>`;
+                    html += `<span class="character-box">as ${data.path[0].character1}</span>`;
                 }
-                html += `</span>`;
                 data.path.forEach(step => {
                     html += `<span class="arrow-container">
                                 <span class="arrow-label">in</span>
@@ -86,11 +111,10 @@
                                 <span class="arrow-label">with</span>
                                 <span class="arrow">&#8594;</span>
                              </span>`;
-                    html += `<span class="node actor">${step.actor2}`;
+                    html += `<span class="node actor">${step.actor2}</span>`;
                     if (step.character2 && step.character2.trim() !== "") {
-                        html += ` <span class="character">as ${step.character2}</span>`;
+                        html += `<span class="character-box">as ${step.character2}</span>`;
                     }
-                    html += `</span>`;
                 });
                 html += `</div>`;
                 resultDiv.innerHTML = html;
