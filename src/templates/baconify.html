@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <title>🥓 Baconometer 🥓</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 2em; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+            background: #212121;
+            color: #eee;
+        }
         .form-section { margin-bottom: 2em; }
         .form-section label {
             font-size: 2em;
@@ -14,26 +19,36 @@
             font-size: 2em;
             padding: 6px 10px;
             margin-right: 1em;
+            background: #424242;
+            color: #eee;
+            border: 1px solid #555;
         }
         .form-section button {
             font-size: 1.2em;
             padding: 6px 18px;
+            background: #616161;
+            color: #eee;
+            border: none;
+            cursor: pointer;
+        }
+        .form-section button:hover {
+            background: #757575;
         }
         .node {
             display: inline-block;
             padding: 10px 20px;
             border-radius: 20px;
-            background: #f0f0f0;
             margin: 0 5px;
+            color: #fff;
         }
-        .film { background: #ffe0b2; }
-        .actor { background: #b3e5fc; }
+        .actor { background: #194E66; } /* teal blue */
+        .film { background: #664719; }  /* brown/amber */
         .character-box {
             display: inline-block;
             padding: 4px 10px;
             border-radius: 12px;
-            background: #b39ddb;
-            color: #222;
+            background: #392461; /* deep purple */
+            color: #fff;
             margin: 0 0 0 3px;
             font-size: 0.9em;
             vertical-align: middle;
@@ -47,7 +62,7 @@
         .arrow-label {
             display: block;
             font-size: 0.9em;
-            color: #555;
+            color: #aaa;
             margin-bottom: 2px;
         }
         .arrow {
