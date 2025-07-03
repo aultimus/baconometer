@@ -64,10 +64,11 @@ def bacon_number(actorA, actorB):
                     [:ACTED_IN*..7]-
                     (b:Actor {lowercase_name: $actorB})
                 )
-                WITH nodes(p) AS ns
+                WITH relationships(p) AS rels, nodes(p) AS ns
                 WITH [i IN range(0, size(ns)-3, 2) |
                     {
                         actor1: ns[i].name,
+                        character: rels[i+1].character,
                         film: ns[i+1].title + ' (' + coalesce(ns[i+1].year, '') + ')',
                         actor2: ns[i+2].name
                     }
