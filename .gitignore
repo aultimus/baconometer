@@ -20,3 +20,4 @@ instance/
 *.tsv
 *.tsv.gz
 *.csv
+/imdb_data
