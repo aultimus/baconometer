@@ -24,11 +24,15 @@ def main():
     ) as outfile:
         reader = csv.DictReader(infile, delimiter="\t")
         writer = csv.writer(outfile)
-        writer.writerow(["tconst:ID(Film)", "title"])
+        writer.writerow(["tconst:ID(Film)", "title", "year"])
         i = 0
         for row in reader:
             film_ids.add(row["tconst"])
-            writer.writerow([row["tconst"], row["primaryTitle"]])
+            # Use startYear if available, else blank
+            year = row.get("startYear", "")
+            if year == "\\N":
+                year = ""
+            writer.writerow([row["tconst"], row["primaryTitle"], year])
             i += 1
             if i % 10000 == 0:
                 print(f"Processed {i}/{total_films} films ({i*100//total_films}%)")
@@ -44,7 +48,7 @@ def main():
         actors_writer = csv.writer(actors_out)
         acted_in_writer = csv.writer(acted_in_out)
         actors_writer.writerow(["nconst:ID(Actor)", "name", "lowercase_name"])
-        acted_in_writer.writerow([":START_ID(Actor)", ":END_ID(Film)"])
+        acted_in_writer.writerow([":START_ID(Actor)", ":END_ID(Film)", "character"])
         i = 0
         rels = 0
         for row in reader:
@@ -54,7 +58,8 @@ def main():
             if row["knownForTitles"]:
                 for title_id in row["knownForTitles"].split(","):
                     if title_id in film_ids:
-                        acted_in_writer.writerow([row["nconst"], title_id])
+                        # character field is always empty for this dataset
+                        acted_in_writer.writerow([row["nconst"], title_id, ""])
                         rels += 1
             i += 1
             if i % 10000 == 0:
