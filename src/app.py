@@ -72,6 +72,7 @@ def bacon_number(actorA, actorB):
                     {
                         actor1: ns[i].name,
                         character1: rels[i].character,
+                        film_id: ns[i+1].tconst,
                         film: ns[i+1].title + ' (' + coalesce(ns[i+1].year, '') + ')',
                         actor2: ns[i+2].name,
                         character2: rels[i+1].character
