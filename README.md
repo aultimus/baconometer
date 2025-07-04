@@ -62,7 +62,7 @@ We recommend the following VS Code extensions:
 1. Standup the database. Run `make run-neo4j`
 2. Open the project folder in VS Code.
 3. Go to the Run and Debug panel (play icon in the sidebar).
-4. Select "Python: Flask" from the dropdown.
+4. Select "Python: Debugger Flask" from the dropdown.
 5. Click the green "Run" button or press F5.
 6. Set breakpoints in your Python files as needed.
 

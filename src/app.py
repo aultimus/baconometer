@@ -9,7 +9,10 @@ app = Flask(__name__)
 # Neo4j connection setup
 driver = GraphDatabase.driver(
     os.getenv("NEO4J_URI", "bolt://localhost:7687"),
-    auth=(os.getenv("NEO4J_USER", "neo4j"), os.getenv("NEO4J_PASSWORD", "test")),
+    auth=(
+        os.getenv("NEO4J_USER", "neo4j"),
+        os.getenv("NEO4J_PASSWORD", "neo4jtest123"),
+    ),
 )
 
 # Configure logging

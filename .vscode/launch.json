@@ -17,6 +17,24 @@
             ],
             "jinja": true,
             "cwd": "${workspaceFolder}/src"
+        },
+        {
+            "name": "Python Debugger: Flask",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "src/app.py",
+                "FLASK_DEBUG": "1",
+                "NEO4J_URI":"bolt://localhost:7687"
+            },
+            "args": [
+                "run",
+                "--no-debugger",
+                "--no-reload"
+            ],
+            "jinja": true,
+            "autoStartBrowser": false
         }
     ]
 }
