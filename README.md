@@ -26,6 +26,8 @@ The service indexes on a lower cased representation of names whilst displaying t
 
 ## Downloading and Preparing Data
 
+You need to obtain data to run the service on. You have an option of running this service using either IMDB or TMDB data. Note, IMDB is only supported for *personal and non-commercial use only*.
+
 ### IMDB Data
 IMDB data is downloadable *personal and non-commercial use only*, you should be aware of the strict copyright when using this data. You should not host a service serving this data, for that use case TMDB or Wikidata is more appropriate.
 
@@ -44,7 +46,15 @@ Use `github.com/aultimus/tmdb-crawler` to obtain `actors.csv`, `films.csv` and `
 
 ## Testing
 
-- `make test` – Runs the test suite using pytest with the correct import path setup.
+This service has `unit tests`, `integration tests` and `system tests`.
+Currently, you will need a neo4j database stood up and populated for both integration and system tests.
+Additionally you will need the service stood up to run system tests.
+TODO: seed a test db with test data.
+
+- `make unit-tests` - Run locally, do not stand up an app, test parts of the code
+- `make integration-tests` - Stand up the database, stands up the app within the same process as pytest. Allows for easier debugging but does not make actual http requests - they are in-process requests.
+- `make system-tests` - Tests the actual built docker image that is running on the system. The tests are isolated from the test process. You can debug the tests in the same way in which you debug the running service when you launch under vscode.
+- `make test` – Runs all test types
 
 ## Running
 
