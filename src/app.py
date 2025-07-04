@@ -3,6 +3,7 @@ from neo4j import GraphDatabase
 from neo4j.exceptions import ServiceUnavailable
 import os
 import logging
+from dataclasses import asdict, dataclass
 
 app = Flask(__name__)
 
@@ -18,6 +19,27 @@ driver = GraphDatabase.driver(
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class FilmStepResponse:
+    film_url: str
+    film: str
+    actor1: str
+    character1: str
+    actor2: str
+    character2: str
+
+    @classmethod
+    def from_db(cls, db_row):
+        return cls(
+            film_url=f"https://www.themoviedb.org/movie/{db_row['film_id']}",
+            film=db_row["film"],
+            actor1=db_row["actor1"],
+            character1=db_row["character1"],
+            actor2=db_row["actor2"],
+            character2=db_row["character2"],
+        )
 
 
 @app.route("/")
@@ -86,9 +108,11 @@ def bacon_number(actorA, actorB):
             record = result.single()
             if record is None or record["bacon_number"] is None:
                 return jsonify({"error": "No path found"}), 404
-            return jsonify(
-                {"bacon_number": record["bacon_number"], "path": record["path_steps"]}
-            )
+            # Convert Neo4j data to clean response type
+            path = [
+                asdict(FilmStepResponse.from_db(step)) for step in record["path_steps"]
+            ]
+            return jsonify({"bacon_number": record["bacon_number"], "path": path})
     except ServiceUnavailable as e:
         logger.error("Database connection failed: %s", e)
         return jsonify({"error": "Database connection failed"}), 503
