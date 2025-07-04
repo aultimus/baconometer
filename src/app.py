@@ -47,6 +47,7 @@ def baconify():
     return render_template("baconify.html")
 
 
+"""
 @app.route("/verify_import", methods=["GET"])
 def verify_import():
     try:
@@ -73,6 +74,7 @@ def verify_import():
     except Exception as e:
         logger.exception("Unexpected error: %s", e)
         return jsonify({"error": "Unexpected server error"}), 500
+"""
 
 
 @app.route("/bacon-number/<actorA>/<actorB>")
