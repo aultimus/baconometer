@@ -82,6 +82,9 @@ def bacon_number(actorA, actorB):
     # Convert input names to lowercase for case-insensitive search
     actor_a_lc = actorA.lower()
     actor_b_lc = actorB.lower()
+    if actor_a_lc == actor_b_lc:
+        # Return bacon number 0 and a trivial path
+        return jsonify({"bacon_number": 0, "path": []})
     try:
         with driver.session() as session:
             result = session.run(
