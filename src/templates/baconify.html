@@ -121,7 +121,11 @@
                                 <span class="arrow-label">in</span>
                                 <span class="arrow">&#8594;</span>
                              </span>`;
-                    html += `<span class="node film">${step.film}</span>`;
+                    if (step.film_url) {
+                        html += `<a href="${step.film_url}" class="node film" target="_blank" rel="noopener noreferrer">${step.film}</a>`;
+                    } else {
+                        html += `<span class="node film">${step.film}</span>`;
+                    }
                     html += `<span class="arrow-container">
                                 <span class="arrow-label">with</span>
                                 <span class="arrow">&#8594;</span>
