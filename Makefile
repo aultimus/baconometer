@@ -10,10 +10,10 @@ unit-tests:
 	pytest tests/unit-tests/
 
 integration-tests:
-	tests/integration-tests/
+	pytest tests/integration-tests/
 
 system-tests:
-	tests/system-tests/
+	pytest tests/system-tests/
 
 test:
 	$(MAKE) unit-tests
