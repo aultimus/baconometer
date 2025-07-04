@@ -20,9 +20,8 @@ test:
 	$(MAKE) integration-tests
 	$(MAKE) system-tests
 
-
-up-dev:
-	docker-compose up --build
+run:
+	docker-compose up
 
 download-imdb-data:
 	curl -O https://datasets.imdbws.com/name.basics.tsv.gz && gunzip name.basics.tsv.gz && curl -O https://datasets.imdbws.com/title.basics.tsv.gz && gunzip title.basics.tsv.gz

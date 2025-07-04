@@ -58,7 +58,7 @@ TODO: seed a test db with test data.
 
 ## Running
 
-- `make up-dev` – Starts the full stack (Neo4j and your app) using Docker Compose.
+- `make run` – Starts the full stack (Neo4j and your app) using Docker Compose.
 - `make create-indexes` - Has to be ran whilst service is running after database has been recreated. You need to standup neo4j with the correct container name first (docker-compose up in another shell)
 
 ### Running in the Debugger (VS Code)
