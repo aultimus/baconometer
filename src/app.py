@@ -27,8 +27,10 @@ class FilmStepResponse:
     film: str
     actor1: str
     character1: str
+    actor1_url: str
     actor2: str
     character2: str
+    actor2_url: str
 
     @classmethod
     def from_db(cls, db_row):
@@ -37,7 +39,9 @@ class FilmStepResponse:
             film=db_row["film"],
             actor1=db_row["actor1"],
             character1=db_row["character1"],
+            actor1_url=f"https://www.themoviedb.org/person/{db_row['actor1_id']}",
             actor2=db_row["actor2"],
+            actor2_url=f"https://www.themoviedb.org/person/{db_row['actor2_id']}",
             character2=db_row["character2"],
         )
 
@@ -97,10 +101,12 @@ def bacon_number(actorA, actorB):
                 WITH relationships(p) AS rels, nodes(p) AS ns
                 WITH [i IN range(0, size(ns)-3, 2) |
                     {
+                        actor1_id: ns[i].nconst,
                         actor1: ns[i].name,
                         character1: rels[i].character,
                         film_id: ns[i+1].tconst,
                         film: ns[i+1].title + ' (' + coalesce(ns[i+1].year, '') + ')',
+                        actor2_id: ns[i+2].nconst,
                         actor2: ns[i+2].name,
                         character2: rels[i+1].character
                     }

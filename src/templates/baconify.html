@@ -112,7 +112,13 @@
                     return;
                 }
                 let html = `<h2>Bacon Number: ${data.bacon_number}</h2><div>`;
-                html += `<span class="node actor">${data.path[0].actor1}</span>`;
+                html += `<span class="node actor">`;
+                if (data.path[0].actor1_url) {
+                    html += `<a href="${data.path[0].actor1_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">${data.path[0].actor1}</a>`;
+                } else {
+                    html += `${data.path[0].actor1}`;
+                }
+                html += `</span>`;
                 if (data.path[0].character1 && data.path[0].character1.trim() !== "") {
                     html += `<span class="character-box">as ${data.path[0].character1}</span>`;
                 }
@@ -130,7 +136,13 @@
                                 <span class="arrow-label">with</span>
                                 <span class="arrow">&#8594;</span>
                              </span>`;
-                    html += `<span class="node actor">${step.actor2}</span>`;
+                    html += `<span class="node actor">`;
+                    if (step.actor2_url) {
+                        html += `<a href="${step.actor2_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">${step.actor2}</a>`;
+                    } else {
+                        html += `${step.actor2}`;
+                    }
+                    html += `</span>`;
                     if (step.character2 && step.character2.trim() !== "") {
                         html += `<span class="character-box">as ${step.character2}</span>`;
                     }
