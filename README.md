@@ -20,9 +20,10 @@ The service indexes on a lower cased representation of names whilst displaying t
 
 ## Dev setup
 
-- `python -m venv .venv && . .venv/bin/activate ` - create and activate venv
-- `make install` – Installs Python dependencies from `requirements.txt` (or via Poetry if configured) and creates `.venv` venv.
-- `. .venv/bin/activate` – Activate venv. It is recommended to install [pyenv](https://github.com/pyenv/pyenv) to obviate the need for this step.
+- `curl -sSL https://install.python-poetry.org | python3 ` - Install Poetry
+- `poetry self add poetry-plugin-shell` - Install poetry extension
+- `make install` – Installs Python dependencies from via Poetry and installs project package
+- `eval $(poetry env activate)` – Activate venv
 
 ## Downloading and Preparing Data
 
