@@ -7,13 +7,13 @@ install:
 	pip install -r src/requirements.txt
 
 unit-tests:
-	pytest tests/unit-tests/
+	PYTHONPATH=$(PWD)/src pytest tests/unit-tests/
 
 integration-tests:
-	pytest tests/integration-tests/
+	PYTHONPATH=$(PWD)/src pytest tests/integration-tests/
 
 system-tests:
-	pytest tests/system-tests/
+	PYTHONPATH=$(PWD)/src pytest tests/system-tests/
 
 test:
 	$(MAKE) unit-tests

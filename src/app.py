@@ -1,20 +1,40 @@
 from flask import Flask, render_template, jsonify
 from neo4j import GraphDatabase
 from neo4j.exceptions import ServiceUnavailable
-import os
 import logging
 from dataclasses import asdict, dataclass
 
-app = Flask(__name__)
+from flask import Blueprint
 
-# Neo4j connection setup
-driver = GraphDatabase.driver(
-    os.getenv("NEO4J_URI", "bolt://localhost:7687"),
-    auth=(
-        os.getenv("NEO4J_USER", "neo4j"),
-        os.getenv("NEO4J_PASSWORD", "neo4jtest123"),
-    ),
-)
+bp = Blueprint("main", __name__)
+
+
+def create_app(test_config=None):
+    # create and configure the app
+    app = Flask(__name__)
+
+    if test_config is None:
+        # load default config from file or env
+        app.config.from_object("config.Config")
+    else:
+        # use explicitly provided config
+        app.config.from_mapping(
+            test_config,
+            SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        )
+    print("DB URI:", app.config["NEO4J_URI"])
+
+    # Neo4j connection setup
+    app.driver = GraphDatabase.driver(
+        app.config["NEO4J_URI"],
+        auth=(app.config["NEO4J_USER"], app.config["NEO4J_PASSWORD"]),
+    )
+
+    # register_extensions(app)
+    app.register_blueprint(bp)
+
+    return app
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -46,7 +66,7 @@ class FilmStepResponse:
         )
 
 
-@app.route("/")
+@bp.route("/")
 def baconify():
     return render_template("baconify.html")
 
@@ -81,7 +101,7 @@ def verify_import():
 """
 
 
-@app.route("/bacon-number/<actorA>/<actorB>")
+@bp.route("/bacon-number/<actorA>/<actorB>")
 def bacon_number(actorA, actorB):
     # Convert input names to lowercase for case-insensitive search
     actor_a_lc = actorA.lower()

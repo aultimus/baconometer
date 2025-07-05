@@ -7,7 +7,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "src/app.py",
+                "FLASK_APP": "src/wsgi.py",
                 "FLASK_DEBUG": "1",
                 "NEO4J_URI":"bolt://localhost:7687"
             },
