@@ -104,6 +104,25 @@ def verify_import():
 
 @bp.route("/bacon-number/<actorA>/<actorB>")
 def bacon_number(actorA, actorB):
+    """
+    Given two actor names, compute the Bacon number and the path of films
+    that connect the two actors.
+
+    The Bacon number is the number of films in the shortest path between
+    the two actors, where each film is a hop.
+
+    The path is returned as a list of dictionaries, each containing
+    information about a hop in the path.
+
+    If an error occurs, the function returns a JSON response with an error message
+    and a status code.
+
+    If no path is found, a 404 error is returned.
+
+    If the database connection fails, a 503 error is returned.
+
+    If any other unexpected error occurs, a 500 error is returned.
+    """
     # Convert input names to lowercase for case-insensitive search
     actor_a_lc = actorA.lower()
     actor_b_lc = actorB.lower()
