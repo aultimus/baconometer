@@ -10,6 +10,7 @@ requires-python = ">=3.10"
 
 dependencies = [
     "flask>=3.1.1,<4.0.0",
+    "neo4j>=5.0.0,<6.0.0",
 ]
 
 [build-system]
@@ -20,7 +21,7 @@ build-backend = "poetry.core.masonry.api"
 name = "baconometer"
 version = "0.1.0"
 packages = [
-    {include = "src"}
+    { include = "baconometer", from = "src" }
 ]
 
 [tool.poetry.group.dev.dependencies]

@@ -197,6 +197,26 @@ files = [
 ]
 
 [[package]]
+name = "neo4j"
+version = "5.28.1"
+description = "Neo4j Bolt driver for Python"
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+files = [
+    {file = "neo4j-5.28.1-py3-none-any.whl", hash = "sha256:6755ef9e5f4e14b403aef1138fb6315b120631a0075c138b5ddb2a06b87b09fd"},
+    {file = "neo4j-5.28.1.tar.gz", hash = "sha256:ae8e37a1d895099062c75bc359b2cce62099baac7be768d0eba7180c1298e214"},
+]
+
+[package.dependencies]
+pytz = "*"
+
+[package.extras]
+numpy = ["numpy (>=1.7.0,<3.0.0)"]
+pandas = ["numpy (>=1.7.0,<3.0.0)", "pandas (>=1.1.0,<3.0.0)"]
+pyarrow = ["pyarrow (>=1.0.0)"]
+
+[[package]]
 name = "packaging"
 version = "25.0"
 description = "Core utilities for Python packages"
@@ -262,6 +282,18 @@ tomli = {version = ">=1", markers = "python_version < \"3.11\""}
 
 [package.extras]
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "requests", "setuptools", "xmlschema"]
+
+[[package]]
+name = "pytz"
+version = "2025.2"
+description = "World timezone definitions, modern and historical"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "pytz-2025.2-py2.py3-none-any.whl", hash = "sha256:5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00"},
+    {file = "pytz-2025.2.tar.gz", hash = "sha256:360b9e3dbb49a209c21ad61809c7fb453643e048b38924c765813546746e81c3"},
+]
 
 [[package]]
 name = "tomli"
@@ -340,4 +372,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "f00869fb52a2cfed608530e1b9f538c973125e150484da11258fdc3aad8b53e7"
+content-hash = "6333aaeaf6f661a586360900429b3756cb3ec22c054093404ae1ef4ae16ade26"

@@ -21,4 +21,4 @@ EXPOSE 8000
 
 # Use Gunicorn for production
 # Default command (can be overridden by docker-compose)
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "src.wsgi:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "baconometer.wsgi:app"]

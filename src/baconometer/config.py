@@ -1,6 +1,5 @@
 import os
 
-
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "dev")
     NEO4J_URI = os.environ.get("NEO4J_URI", "bolt://neo4j:7687")
