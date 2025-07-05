@@ -1,6 +1,7 @@
 import pytest
 from app import create_app
 
+# TODO: use config file instead?
 NEO4J_URI = "bolt://neo4j:7687"
 NEO4J_USER = "neo4j"
 NEO4J_PASSWORD = "neo4jtest123"

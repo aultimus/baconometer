@@ -1,22 +1,27 @@
 [project]
 name = "baconometer"
 version = "0.1.0"
-description = ""
+description = "A Flask-based application for doing six degrees of separation analysis"
 authors = [
-    {name = "Matthew Ault",email = "matthew.ault@gmail.com"}
+    {name = "Matthew Ault", email = "matthew.ault@gmail.com"}
 ]
 readme = "README.md"
-requires-python = "^3.10"
+requires-python = ">=3.10"
+
 dependencies = [
-    "flask (>=3.1.1,<4.0.0)"
+    "flask>=3.1.1,<4.0.0",
 ]
-
-[tool.poetry]
-package-mode = false
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.4.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "baconometer"
+version = "0.1.0"
+packages = [
+    {include = "src"}
+]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.0"

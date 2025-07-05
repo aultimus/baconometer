@@ -3,17 +3,17 @@
 .PHONY: install run download-imdb-data create-venv test import-to-neo4j compose-up download-imdb-data prepare-data create-indexes unit-tests integration-tests system-tests test up-dev
 
 install:
-	pip install -r src/dev-requirements.txt
-	pip install -r src/requirements.txt
+	poetry install
+	pip install -e .
 
 unit-tests:
-	PYTHONPATH=$(PWD)/src pytest tests/unit-tests/
+	poetry run pytest tests/unit-tests/
 
 integration-tests:
-	PYTHONPATH=$(PWD)/src pytest tests/integration-tests/
+	poetry run pytest tests/integration-tests/
 
 system-tests:
-	PYTHONPATH=$(PWD)/src pytest tests/system-tests/
+	poetry run pytest tests/system-tests/
 
 test:
 	$(MAKE) unit-tests
@@ -27,7 +27,7 @@ download-imdb-data:
 	curl -O https://datasets.imdbws.com/name.basics.tsv.gz && gunzip name.basics.tsv.gz && curl -O https://datasets.imdbws.com/title.basics.tsv.gz && gunzip title.basics.tsv.gz
 
 prepare-data:
-	python scripts/generate_neo4j_bulk_csvs.py
+	poetry run python scripts/generate_neo4j_bulk_csvs.py
 
 import-data:
 	docker compose -f docker-compose.import.yml run import

@@ -1,4 +1,5 @@
-from flask import Flask, render_template, jsonify
+from .config import Config
+from flask import current_app, Flask, render_template, jsonify
 from neo4j import GraphDatabase
 from neo4j.exceptions import ServiceUnavailable
 import logging
@@ -15,7 +16,7 @@ def create_app(test_config=None):
 
     if test_config is None:
         # load default config from file or env
-        app.config.from_object("config.Config")
+        app.config.from_object(Config)
     else:
         # use explicitly provided config
         app.config.from_mapping(
@@ -110,7 +111,7 @@ def bacon_number(actorA, actorB):
         # Return bacon number 0 and a trivial path
         return jsonify({"bacon_number": 0, "path": []})
     try:
-        with driver.session() as session:
+        with current_app.driver.session() as session:
             result = session.run(
                 """
                 MATCH p = shortestPath(
