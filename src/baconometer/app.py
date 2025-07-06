@@ -1,3 +1,4 @@
+from re import A
 from .config import Config
 from flask import current_app, Flask, render_template, jsonify
 from neo4j import GraphDatabase
@@ -124,6 +125,9 @@ def bacon_number(actorA, actorB):
     If any other unexpected error occurs, a 500 error is returned.
     """
     # Convert input names to lowercase for case-insensitive search
+    if len(actorA) > 100 or len(actorB) > 100:
+        return jsonify({"error": "Input data too long"}), 400
+
     actor_a_lc = actorA.lower()
     actor_b_lc = actorB.lower()
     if actor_a_lc == actor_b_lc:
