@@ -1,4 +1,6 @@
-# Baconometer
+# 🥓 Baconometer 🥓
+
+Try it out [here](https://baconometer.foobarcat.com).
 
 This is a service that allows a user to find Bacon numbers.
 A Bacon number is a measure of the "degrees of separation" between any actor and the actor Kevin Bacon, based on their appearances in films together. Specifically, an actor's Bacon number is defined as follows:
