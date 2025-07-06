@@ -4,7 +4,7 @@
 
 install:
 	poetry install
-	pip install -e .
+	poetry run pip install -e .
 
 unit-tests:
 	poetry run pytest tests/unit-tests/
