@@ -75,6 +75,13 @@
 </head>
 <body>
     <h1>🥓 Baconometer 🥓</h1>
+    <div style="background:#333;padding:1.5em 2em;border-radius:12px;margin-bottom:2em;box-shadow:0 2px 8px #0003;">
+        <h2 style="margin-top:0;">How to use the Baconometer</h2>
+        <ul style="font-size:1.15em;line-height:1.7;">
+            <li>Enter the names of two actors in the boxes below.</li>
+            <li>Click <b>Baconify</b> to find the shortest connection between them via shared films.</li>
+        </ul>
+    </div>
     <div class="form-section">
         <label for="actorA">Actor A:</label>
         <input type="text" id="actorA" name="actorA" required value="Kevin Bacon">
@@ -154,5 +161,12 @@
             }
         };
     </script>
+    <div style="background:#222;padding:1em 2em;border-radius:10px;margin:2em 0 0 0;font-size:1.05em;max-width:700px;text-align:left;">
+        <span>Powered by <a href="https://www.themoviedb.org/" target="_blank" style="color:#4FC3F7;">TheMovieDB.org</a> API.</span>
+        <br>
+        <span>Source code: <a href="https://github.com/aultimus/baconometer" target="_blank" style="color:#81C784;">github.com/aultimus/baconometer</a></span>
+        <br>
+        <span style="color:#bbb;">Made by <b>Matthew Ault (aultimus)</b></span>
+    </div>
 </body>
 </html>
