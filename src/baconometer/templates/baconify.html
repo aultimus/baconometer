@@ -313,7 +313,21 @@
 
         <div class="card hidden" id="result"></div>
     <script>
-        document.getElementById('baconifyBtn').onclick = async function() {
+        const baconifyBtn = document.getElementById('baconifyBtn');
+        const actorAInputEl = document.getElementById('actorA');
+        const actorBInputEl = document.getElementById('actorB');
+
+        const handleEnterToBaconify = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                baconifyBtn.click();
+            }
+        };
+
+        actorAInputEl.addEventListener('keydown', handleEnterToBaconify);
+        actorBInputEl.addEventListener('keydown', handleEnterToBaconify);
+
+        baconifyBtn.onclick = async function() {
             const actorAInput = document.getElementById('actorA').value.trim();
             const actorBInput = document.getElementById('actorB').value.trim();
             const actorA = encodeURIComponent(actorAInput);
