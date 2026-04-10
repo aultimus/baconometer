@@ -198,23 +198,23 @@
 
         .node {
             display: inline-block;
-            padding: 10px 16px;
-            border-radius: 20px;
-            margin: 6px 6px;
-            color: #fff;
-            max-width: 100%;
-            overflow-wrap: anywhere;
+            padding: 7px 12px;
+            border-radius: 14px;
+            display: inline-block;
+            color: white;
+            font-weight: normal;
+            text-decoration: none;
+            white-space: nowrap;
         }
+
         .actor { background: #194E66; } /* teal blue */
         .film { background: #664719; }  /* brown/amber */
-        .character-box {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            background: #392461; /* deep purple */
-            color: #fff;
-            margin: 0 0 0 6px;
-            font-size: 0.9em;
+
+        .node.actor .role {
+            font-size: 0.85em;
+            opacity: 0.85;
+            margin-left: 6px;
+            font-weight: normal;
             vertical-align: middle;
         }
 
@@ -223,6 +223,14 @@
             flex-wrap: wrap;
             align-items: center;
             gap: 6px;
+        }
+
+        #result .path a,
+        #result .path a:visited,
+        #result .path a:hover,
+        #result .path a:active {
+            color: inherit;
+            text-decoration: underline;
         }
 
         .arrow-container {
@@ -377,14 +385,14 @@
                 let html = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;">Bacon number: <b>${data.bacon_number}</b></div><div class="path">`;
                 html += `<span class="node actor">`;
                 if (data.path[0].actor1_url) {
-                    html += `<a href="${data.path[0].actor1_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">${data.path[0].actor1}</a>`;
+                    html += `<a href="${data.path[0].actor1_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;">${data.path[0].actor1}</a>`;
                 } else {
                     html += `${data.path[0].actor1}`;
                 }
-                html += `</span>`;
                 if (data.path[0].character1 && data.path[0].character1.trim() !== "") {
-                    html += `<span class="character-box">as ${data.path[0].character1}</span>`;
+                    html += `<span class="role">as ${data.path[0].character1}</span>`;
                 }
+                html += `</span>`;
                 data.path.forEach(step => {
                     html += `<span class="arrow-container">
                                 <span class="arrow-label">in</span>
@@ -401,14 +409,14 @@
                              </span>`;
                     html += `<span class="node actor">`;
                     if (step.actor2_url) {
-                        html += `<a href="${step.actor2_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">${step.actor2}</a>`;
+                        html += `<a href="${step.actor2_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;">${step.actor2}</a>`;
                     } else {
                         html += `${step.actor2}`;
                     }
-                    html += `</span>`;
                     if (step.character2 && step.character2.trim() !== "") {
-                        html += `<span class="character-box">as ${step.character2}</span>`;
+                        html += `<span class="role">as ${step.character2}</span>`;
                     }
+                    html += `</span>`;
                 });
                 html += `</div>`;
                 resultDiv.innerHTML = html;
