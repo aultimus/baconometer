@@ -360,7 +360,7 @@
                     errorBanner.classList.remove('hidden');
                     return;
                 }
-                let html = `<h2>Bacon Number: ${data.bacon_number}</h2><div class="path">`;
+                let html = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;">Bacon number: <b>${data.bacon_number}</b></div><div class="path">`;
                 html += `<span class="node actor">`;
                 if (data.path[0].actor1_url) {
                     html += `<a href="${data.path[0].actor1_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">${data.path[0].actor1}</a>`;
