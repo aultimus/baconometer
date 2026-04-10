@@ -6,10 +6,15 @@
     <link rel="icon" href="/static/bacon_32.png" type="image/png">
     <title>The Baconometer</title>
     <style>
+        :root {
+            --accent: #f25a78;
+            --bg: #212121;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background: #212121;
+            background: var(--bg);
             color: #eee;
         }
 
@@ -201,18 +206,21 @@
             padding: 7px 12px;
             border-radius: 14px;
             display: inline-block;
-            color: white;
+            color: #fff;
+            background: #262626;
+            border: 2px solid;
+            font-size: 1.2em;
             font-weight: normal;
             text-decoration: none;
             white-space: nowrap;
         }
 
-        .actor { background: #194E66; } /* teal blue */
-        .film { background: #664719; }  /* brown/amber */
+        .actor { border-color: var(--accent); }
+        .film { border-color: #ffc39c; }
 
         .node.actor .role {
             font-size: 0.85em;
-            opacity: 0.85;
+            opacity: 0.8;
             margin-left: 6px;
             font-weight: normal;
             vertical-align: middle;
@@ -275,7 +283,7 @@
         .footer a:visited,
         .footer a:hover,
         .footer a:active {
-            color: #f25a78;
+            color: #ffc39c;
         }
     
         footer.site-footer {
@@ -355,7 +363,7 @@
             }
 
             resultDiv.classList.remove('hidden');
-            resultDiv.innerHTML = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;">Loading...</div>`;
+            resultDiv.innerHTML = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;font-size:1.2em;">Loading...</div>`;
             try {
                 const response = await fetch(`/bacon-number/${actorA}/${actorB}`);
                 let data;
@@ -382,7 +390,7 @@
                     errorBanner.classList.remove('hidden');
                     return;
                 }
-                let html = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;">Bacon number: <b>${data.bacon_number}</b></div><div class="path">`;
+                let html = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;font-size:1.2em;">Bacon number: <b>${data.bacon_number}</b></div><div class="path">`;
                 html += `<span class="node actor">`;
                 if (data.path[0].actor1_url) {
                     html += `<a href="${data.path[0].actor1_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;">${data.path[0].actor1}</a>`;
