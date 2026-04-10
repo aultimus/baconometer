@@ -243,7 +243,6 @@
 
         .arrow-container {
             display: inline-flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-width: 44px;
@@ -255,16 +254,18 @@
             margin-bottom: 2px;
         }
         .arrow {
-            font-size: 1.5em;
-            vertical-align: middle;
+            width: 22px;
+            height: 22px;
+            display: block;
+            stroke: #aaa;
         }
 
-        #result { margin-top: 0; }
+        #result { margin-top: 14px; }
         #result h2 { margin: 0 0 10px; }
 
         .alert {
             margin-top: 12px;
-            padding: 12px 14px;
+            padding: 10px 12px;
             border-radius: 10px;
             background: #351a20;
             border: 1px solid #5b2a35;
@@ -363,7 +364,7 @@
             }
 
             resultDiv.classList.remove('hidden');
-            resultDiv.innerHTML = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;font-size:1.2em;">Loading...</div>`;
+            resultDiv.innerHTML = `<h2>Results</h2><div style="margin-top:0;margin-bottom:16px;opacity:0.95;font-size:1.2em;">Loading...</div>`;
             try {
                 const response = await fetch(`/bacon-number/${actorA}/${actorB}`);
                 let data;
@@ -390,7 +391,7 @@
                     errorBanner.classList.remove('hidden');
                     return;
                 }
-                let html = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;font-size:1.2em;">Bacon number: <b>${data.bacon_number}</b></div><div class="path">`;
+                let html = `<h2>Results</h2><div style="margin-top:0;margin-bottom:16px;opacity:0.95;font-size:1.2em;">Bacon number: <b>${data.bacon_number}</b></div><div class="path">`;
                 html += `<span class="node actor">`;
                 if (data.path[0].actor1_url) {
                     html += `<a href="${data.path[0].actor1_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;">${data.path[0].actor1}</a>`;
@@ -402,19 +403,13 @@
                 }
                 html += `</span>`;
                 data.path.forEach(step => {
-                    html += `<span class="arrow-container">
-                                <span class="arrow-label">in</span>
-                                <span class="arrow">&#8594;</span>
-                             </span>`;
+                    html += `<span class="arrow-container"><svg class="arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
                     if (step.film_url) {
                         html += `<a href="${step.film_url}" class="node film" target="_blank" rel="noopener noreferrer">${step.film}</a>`;
                     } else {
                         html += `<span class="node film">${step.film}</span>`;
                     }
-                    html += `<span class="arrow-container">
-                                <span class="arrow-label">with</span>
-                                <span class="arrow">&#8594;</span>
-                             </span>`;
+                    html += `<span class="arrow-container"><svg class="arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
                     html += `<span class="node actor">`;
                     if (step.actor2_url) {
                         html += `<a href="${step.actor2_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;">${step.actor2}</a>`;
