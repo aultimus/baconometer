@@ -22,10 +22,41 @@
 
         .header {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             justify-content: space-between;
             gap: 12px;
             margin: 6px 0 14px;
+        }
+
+        .logo {
+            width: clamp(44px, 5vw, 72px);
+            height: clamp(44px, 5vw, 72px);
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo a,
+        .logo a:visited,
+        .logo a:hover,
+        .logo a:active {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            filter: invert(1);
+            opacity: 0.9;
         }
 
         .brand {
@@ -247,6 +278,7 @@
                 <h1><a href="/">The Baconometer</a></h1>
                 <p class="tagline">The Interactive Film Network Exploration Tool</p>
             </div>
+            <div class="logo" aria-hidden="true"><a href="/"><img src="/static/bacon.svg" alt=""></a></div>
         </div>
 
         <div class="card help">
