@@ -347,7 +347,7 @@
             }
 
             resultDiv.classList.remove('hidden');
-            resultDiv.innerHTML = 'Loading...';
+            resultDiv.innerHTML = `<h2>Results</h2><div style="margin-top:-6px;margin-bottom:10px;opacity:0.95;">Loading...</div>`;
             try {
                 const response = await fetch(`/bacon-number/${actorA}/${actorB}`);
                 let data;
