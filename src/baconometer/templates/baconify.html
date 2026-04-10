@@ -2,44 +2,144 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>🥓 Baconometer 🥓</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 2em;
+            margin: 0;
             background: #212121;
             color: #eee;
         }
-        .form-section { margin-bottom: 2em; }
-        .form-section label {
-            font-size: 2em;
-            margin-right: 0.5em;
+
+        .hidden { display: none; }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 18px 14px 32px;
         }
-        .form-section input[type="text"] {
-            font-size: 2em;
-            padding: 6px 10px;
-            margin-right: 1em;
-            background: #424242;
+
+        .header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 6px 0 14px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            line-height: 1.15;
+        }
+
+        .card {
+            background: #2b2b2b;
+            border: 1px solid #3a3a3a;
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 2px 10px #0003;
+        }
+
+        .card + .card { margin-top: 14px; }
+
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 1.25rem;
+        }
+
+        .help ul {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+
+        .form-section { margin: 0; }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.95rem;
+            color: #ddd;
+            margin: 0 0 6px;
+        }
+
+        .field input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+            padding: 12px 12px;
+            border-radius: 10px;
+            background: #1f1f1f;
             color: #eee;
-            border: 1px solid #555;
+            border: 1px solid #444;
         }
-        .form-section button {
-            font-size: 1.2em;
-            padding: 6px 18px;
+
+        .field input[type="text"]:focus {
+            outline: none;
+            border-color: #6b6b6b;
+            box-shadow: 0 0 0 3px #ffffff12;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions button {
+            width: 100%;
+            font-size: 1rem;
+            padding: 12px 14px;
+            border-radius: 10px;
             background: #616161;
             color: #eee;
-            border: none;
+            border: 1px solid #777;
             cursor: pointer;
         }
-        .form-section button:hover {
+
+        .actions button:hover {
             background: #757575;
         }
+
+        @media (min-width: 720px) {
+            .container {
+                padding: 28px 22px 40px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .card {
+                padding: 20px 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr 1fr auto;
+            }
+
+            .actions button {
+                width: auto;
+                min-width: 140px;
+            }
+        }
+
         .node {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 10px 16px;
             border-radius: 20px;
-            margin: 0 5px;
+            margin: 6px 6px;
             color: #fff;
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
         .actor { background: #194E66; } /* teal blue */
         .film { background: #664719; }  /* brown/amber */
@@ -49,15 +149,24 @@
             border-radius: 12px;
             background: #392461; /* deep purple */
             color: #fff;
-            margin: 0 0 0 3px;
+            margin: 0 0 0 6px;
             font-size: 0.9em;
             vertical-align: middle;
         }
+
+        .path {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+
         .arrow-container {
-            display: inline-block;
-            text-align: center;
-            width: 60px;
-            vertical-align: middle;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
         }
         .arrow-label {
             display: block;
@@ -69,37 +178,83 @@
             font-size: 1.5em;
             vertical-align: middle;
         }
-        #result { margin-top: 2em; }
-        .error { color: red; }
+
+        #result { margin-top: 0; }
+        #result h2 { margin: 0 0 10px; }
+
+        .alert {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: #351a20;
+            border: 1px solid #5b2a35;
+            color: #ffd6de;
+            font-size: 0.98rem;
+        }
+
+        .footer {
+            background: #222;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 1.02em;
+        }
+
+        .footer a { color: inherit; }
     </style>
 </head>
 <body>
-    <h1>🥓 Baconometer 🥓</h1>
-    <div style="background:#333;padding:1.5em 2em;border-radius:12px;margin-bottom:2em;box-shadow:0 2px 8px #0003;">
-        <h2 style="margin-top:0;">How to use the Baconometer</h2>
-        <ul style="font-size:1.15em;line-height:1.7;">
-            <li>Enter the names of two actors in the boxes below.</li>
-            <li>Click <b>Baconify</b> to find the shortest connection between them via shared films.</li>
-        </ul>
-    </div>
-    <div class="form-section">
-        <label for="actorA">Actor A:</label>
-        <input type="text" id="actorA" name="actorA" required value="Kevin Bacon">
-        <label for="actorB">Actor B:</label>
-        <input type="text" id="actorB" name="actorB" required>
-        <button id="baconifyBtn">Baconify</button>
-    </div>
-    <div id="result"></div>
+    <div class="container">
+        <div class="header">
+            <h1>🥓 Baconometer 🥓</h1>
+        </div>
+
+        <div class="card help">
+            <h2>How to use the Baconometer</h2>
+            <ul>
+                <li>Enter the names of two actors in the boxes below.</li>
+                <li>Click <b>Baconify</b> to find the shortest connection between them via shared films.</li>
+            </ul>
+        </div>
+
+        <div class="card form-section">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="actorA">Actor A</label>
+                    <input type="text" id="actorA" name="actorA" required value="Kevin Bacon" autocomplete="off" autocapitalize="words" spellcheck="false">
+                </div>
+                <div class="field">
+                    <label for="actorB">Actor B</label>
+                    <input type="text" id="actorB" name="actorB" required autocomplete="off" autocapitalize="words" spellcheck="false">
+                </div>
+                <div class="actions">
+                    <button id="baconifyBtn">Baconify</button>
+                </div>
+            </div>
+            <div id="errorBanner" class="alert hidden" role="alert"></div>
+        </div>
+
+        <div class="card hidden" id="result"></div>
     <script>
         document.getElementById('baconifyBtn').onclick = async function() {
-            const actorA = encodeURIComponent(document.getElementById('actorA').value.trim());
-            const actorB = encodeURIComponent(document.getElementById('actorB').value.trim());
+            const actorAInput = document.getElementById('actorA').value.trim();
+            const actorBInput = document.getElementById('actorB').value.trim();
+            const actorA = encodeURIComponent(actorAInput);
+            const actorB = encodeURIComponent(actorBInput);
             const resultDiv = document.getElementById('result');
+            const errorBanner = document.getElementById('errorBanner');
+
+            errorBanner.classList.add('hidden');
+            errorBanner.textContent = '';
+            resultDiv.classList.add('hidden');
             resultDiv.innerHTML = '';
-            if (!actorA || !actorB) {
-                resultDiv.innerHTML = '<div class="error">Please enter both actor names.</div>';
+
+            if (!actorAInput || !actorBInput) {
+                errorBanner.textContent = 'Please enter both actor names.';
+                errorBanner.classList.remove('hidden');
                 return;
             }
+
+            resultDiv.classList.remove('hidden');
             resultDiv.innerHTML = 'Loading...';
             try {
                 const response = await fetch(`/bacon-number/${actorA}/${actorB}`);
@@ -107,18 +262,27 @@
                 try {
                     data = await response.json();
                 } catch (jsonErr) {
-                    resultDiv.innerHTML = `<div class="error">Unexpected server error. Please try again later.</div>`;
+                    resultDiv.classList.add('hidden');
+                    resultDiv.innerHTML = '';
+                    errorBanner.textContent = 'Unexpected server error. Please try again later.';
+                    errorBanner.classList.remove('hidden');
                     return;
                 }
                 if (!response.ok) {
-                    resultDiv.innerHTML = `<div class="error">${data.error || 'No path found.'}</div>`;
+                    resultDiv.classList.add('hidden');
+                    resultDiv.innerHTML = '';
+                    errorBanner.textContent = data.error || 'No path found.';
+                    errorBanner.classList.remove('hidden');
                     return;
                 }
                 if (!data.path || data.path.length === 0) {
-                    resultDiv.innerHTML = '<div class="error">No connection found between these actors.</div>';
+                    resultDiv.classList.add('hidden');
+                    resultDiv.innerHTML = '';
+                    errorBanner.textContent = 'No connection found between these actors.';
+                    errorBanner.classList.remove('hidden');
                     return;
                 }
-                let html = `<h2>Bacon Number: ${data.bacon_number}</h2><div>`;
+                let html = `<h2>Bacon Number: ${data.bacon_number}</h2><div class="path">`;
                 html += `<span class="node actor">`;
                 if (data.path[0].actor1_url) {
                     html += `<a href="${data.path[0].actor1_url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">${data.path[0].actor1}</a>`;
@@ -157,16 +321,20 @@
                 html += `</div>`;
                 resultDiv.innerHTML = html;
             } catch (e) {
-                resultDiv.innerHTML = `<div class="error">Error: ${e.message || 'Unexpected error.'}</div>`;
+                resultDiv.classList.add('hidden');
+                resultDiv.innerHTML = '';
+                errorBanner.textContent = e.message || 'Unexpected error.';
+                errorBanner.classList.remove('hidden');
             }
         };
     </script>
-    <div style="background:#222;padding:1em 2em;border-radius:10px;margin:2em 0 0 0;font-size:1.05em;max-width:700px;text-align:left;">
-        <span>Powered by <a href="https://www.themoviedb.org/" target="_blank" style="color:#4FC3F7;">TheMovieDB.org</a> API.</span>
-        <br>
-        <span>Source code: <a href="https://github.com/aultimus/baconometer" target="_blank" style="color:#81C784;">github.com/aultimus/baconometer</a></span>
-        <br>
-        <span style="color:#bbb;">Made by <b>Matthew Ault (aultimus)</b></span>
+        <div class="card footer">
+            <span>Powered by <a href="https://www.themoviedb.org/" target="_blank" style="color:#4FC3F7;">TheMovieDB.org</a> API.</span>
+            <br>
+            <span>Source code: <a href="https://github.com/aultimus/baconometer" target="_blank" style="color:#81C784;">github.com/aultimus/baconometer</a></span>
+            <br>
+            <span style="color:#bbb;">Made by <b>Matthew Ault (aultimus)</b></span>
+        </div>
     </div>
 </body>
 </html>
