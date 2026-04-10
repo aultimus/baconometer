@@ -47,6 +47,10 @@ Use `github.com/aultimus/tmdb-crawler` to obtain `actors.csv`, `films.csv` and `
 
 - `make import-data` – Runs the Neo4j bulk import step using Docker Compose. This loads the generated CSVs into a fresh Neo4j database. To run the bulk import manually (outside Docker), use `scripts/import_neo4j_bulk.sh`.
 
+OR
+
+- `make import-data-seed` – Runs the Neo4j bulk import step using Docker Compose with a small fixed test data set.
+
 ## Testing
 
 This service has `unit tests`, `integration tests` and `system tests`.

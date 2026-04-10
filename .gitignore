@@ -21,3 +21,5 @@ instance/
 *.tsv.gz
 *.csv
 /imdb_data
+
+!seed/*.csv

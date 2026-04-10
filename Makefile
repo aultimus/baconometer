@@ -32,6 +32,9 @@ prepare-data:
 import-data:
 	docker compose -f docker-compose.import.yml run import
 
+import-data-seed:
+	docker compose -f docker-compose.import.seed.yml run seed
+
 run-neo4j:
 	docker compose -f docker-compose.yml up neo4j
 
