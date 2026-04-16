@@ -205,6 +205,19 @@
             .logo {
                 margin-top: 4px;
             }
+
+            .node {
+                white-space: normal;
+                max-width: 100%;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+                box-sizing: border-box;
+            }
+
+            .path .node {
+                min-width: 0;
+                flex: 0 1 auto;
+            }
         }
 
         .node {
@@ -219,6 +232,14 @@
             font-weight: normal;
             text-decoration: none;
             white-space: nowrap;
+        }
+
+        @media (max-width: 719px) {
+            .node {
+                white-space: normal;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
         }
 
         .actor { border-color: var(--accent); }
