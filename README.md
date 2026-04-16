@@ -56,7 +56,6 @@ OR
 This service has `unit tests`, `integration tests` and `system tests`.
 Currently, you will need a neo4j database stood up and populated for both integration and system tests.
 Additionally you will need the service stood up to run system tests.
-TODO: seed a test db with test data.
 
 - `make unit-tests` - Run locally, do not stand up an app, test parts of the code
 - `make integration-tests` - Stand up the database, stands up the app within the same process as pytest. Allows for easier debugging but does not make actual http requests - they are in-process requests.
