@@ -1,4 +1,4 @@
-# 🥓 Baconometer 🥓
+# Baconometer - The Interactive Film Network Exploration Tool
 
 ![Baconometer demo](images/baconometer.gif)
 
