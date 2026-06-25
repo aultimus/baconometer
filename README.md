@@ -5,7 +5,7 @@
 Try it out [here](https://baconometer.foobarcat.com).
 
 This is a service that allows a user to find Bacon numbers.
-A Bacon number is a measure of the "degrees of separation" between any actor and the actor Kevin Bacon, based on their appearances in films together. Specifically, an actor's Bacon number is defined as follows:
+Coined in reference to the ubiquitous Kevin Bacon, a Bacon number is a measure of the "degrees of separation" between any two actors, based on their appearances in films together. Using Kevin Bacon as an example, an actor's Bacon number is defined as follows:
 
 Kevin Bacon himself has a Bacon number of 0.
 Any actor who has appeared in a film with Kevin Bacon has a Bacon number of 1.
