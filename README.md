@@ -1,5 +1,7 @@
 # 🥓 Baconometer 🥓
 
+![Baconometer demo](images/baconometer.gif)
+
 Try it out [here](https://baconometer.foobarcat.com).
 
 This is a service that allows a user to find Bacon numbers.
